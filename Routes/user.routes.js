@@ -63,4 +63,52 @@ router.post("/login", (req, res) => {
 	);
 });
 
+
+router.post("/checkemail",(req,res) => {
+	User.findOne(
+		{
+			email:req.body.email
+		},
+		(err , user) => {
+			if(err)
+			{
+				console.log(err);
+				res.json({ status: false, error: err, message:"Error" });
+			}
+			else{
+				if(user == null)
+				{
+					res.json({ message:"Email Id not resgistered", status:false });
+				}else{
+					res.json({status:true})
+				}
+			}
+		}
+	)
+})
+
+
+router.post("/getinfoemail",(req,res) => {
+	User.findOne(
+		{
+			email:req.body.email
+		},
+		(err , user) => {
+			if(err)
+			{
+				console.log(err);
+				res.json({ status: false, error: err, message:"Error" });
+			}
+			else{
+				if(user == null)
+				{
+					res.json({ message:"Email Id not resgistered", status:false });
+				}else{
+					res.json({status:true, data:user })
+				}
+			}
+		}
+	)
+})
+
 module.exports = router;
