@@ -44,71 +44,79 @@ router.post("/login", (req, res) => {
 	User.findOne(
 		{
 			email: req.body.email,
-			password: req.body.password,
 		},
 		(err, user) => {
 			if (err) {
 				console.log(err);
-				res.json({ status: false, error:err, message:"error" });
+				res.json({ status: false, error: err, message: "error" });
 			} else {
 				console.log(user);
 				if (user == null) {
-					res.json({ message: "Email Id or Password Invalid", status:false });
+					res.json({ message: "Invalid Email or Password", status: false });
 				} else {
-					console.log(user);
-					res.json({data:user, status:true});
+					let buff = Buffer.from(user.password, "base64");
+					let text = buff.toString("ascii");
+					console.log(text,req.body.password);
+					if (
+						req.body.password === text
+					) {
+						console.log(user);
+						res.json({ data: user, status: true });
+					} else{
+						res.json({message:"Invaild Email or Password", status: false})
+					}
+					// let data = "MTIzNDU2";
+					
 				}
 			}
 		}
 	);
 });
 
-
-router.post("/checkemail",(req,res) => {
+router.post("/checkemail", (req, res) => {
 	User.findOne(
 		{
-			email:req.body.email
+			email: req.body.email,
 		},
-		(err , user) => {
-			if(err)
-			{
+		(err, user) => {
+			if (err) {
 				console.log(err);
-				res.json({ status: false, error: err, message:"Error" });
-			}
-			else{
-				if(user == null)
-				{
-					res.json({ message:"Email Id not resgistered", status:false });
-				}else{
-					res.json({status:true})
+				res.json({ status: false, error: err, message: "Error" });
+			} else {
+				if (user == null) {
+					res.json({ message: "Email Id not resgistered", status: false });
+				} else {
+					res.json({ status: true });
 				}
 			}
 		}
-	)
-})
+	);
+});
 
-
-router.post("/getinfoemail",(req,res) => {
+router.post("/getinfoemail", (req, res) => {
 	User.findOne(
 		{
-			email:req.body.email
+			email: req.body.email,
 		},
-		(err , user) => {
-			if(err)
-			{
+		(err, user) => {
+			if (err) {
 				console.log(err);
-				res.json({ status: false, error: err, message:"Error" });
-			}
-			else{
-				if(user == null)
-				{
-					res.json({ message:"Email Id not resgistered", status:false });
-				}else{
-					res.json({status:true, data:user })
+				res.json({ status: false, error: err, message: "Error" });
+			} else {
+				if (user == null) {
+					res.json({ message: "Email Id not resgistered", status: false });
+				} else {
+					// res.json({ status: true, data: user });
+					// let data = "c3RhY2thYnVzZS5jb20=";
+					// let buff = new Buffer(data, "base64");
+					// let text = buff.toString("ascii");
+					// console.log(
+					// 	'"' + data + '" converted from Base64 to ASCII is "' + text + '"'
+					// );
 				}
 			}
 		}
-	)
-})
+	);
+});
 
 module.exports = router;
