@@ -50,23 +50,40 @@ router.post("/login", (req, res) => {
 				console.log(err);
 				res.json({ status: false, error: err, message: "error" });
 			} else {
-				console.log(user);
+				console.log(user.name);
 				if (user == null) {
 					res.json({ message: "Invalid Email or Password", status: false });
 				} else {
 					let buff = Buffer.from(user.password, "base64");
 					let text = buff.toString("ascii");
-					console.log(text,req.body.password);
-					if (
-						req.body.password === text
-					) {
-						console.log(user);
-						res.json({ data: user, status: true });
-					} else{
-						res.json({message:"Invaild Email or Password", status: false})
+					console.log(text, req.body.password);
+					if (req.body.password === text) {
+						console.log(user.name);
+						res.json({
+							data: {
+								name: user.name,
+								appno: user.appno,
+								phone: user.phone,
+								s12regno: user.s12regno,
+								Groupcode: user.Groupcode,
+								adharno: user.adharno,
+								coff: user.coff,
+								comunity: user.comunity,
+								exser: user.exser,
+								pchalage: user.pchalage,
+								rank: user.rank,
+								s1: user.s1,
+								s2: user.s2,
+								s3: user.s3,
+								studgovt: user.studgovt,
+								s12rollno: user.s12rollno,
+							},
+							status: true,
+						});
+					} else {
+						res.json({ message: "Invaild Email or Password", status: false });
 					}
 					// let data = "MTIzNDU2";
-					
 				}
 			}
 		}
