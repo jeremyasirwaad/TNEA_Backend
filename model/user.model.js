@@ -98,6 +98,9 @@ const newScheme = new Schema({
 	studgovt: {
 		type: "Boolean",
 	},
+	img: {
+		type: "String",
+	},
 });
 
 module.exports = mongoose.model("User", newScheme);

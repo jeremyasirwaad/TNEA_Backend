@@ -50,7 +50,7 @@ router.post("/login", (req, res) => {
 				console.log(err);
 				res.json({ status: false, error: err, message: "error" });
 			} else {
-				console.log(user.name);
+				// console.log(user.name);
 				if (user == null) {
 					res.json({ message: "Invalid Email or Password", status: false });
 				} else {
@@ -67,16 +67,19 @@ router.post("/login", (req, res) => {
 								s12regno: user.s12regno,
 								Groupcode: user.Groupcode,
 								adharno: user.adharno,
+								Nativity: user.Nativity,
 								coff: user.coff,
 								comunity: user.comunity,
 								exser: user.exser,
 								pchalage: user.pchalage,
 								rank: user.rank,
+								sport: user.sport,
 								s1: user.s1,
 								s2: user.s2,
 								s3: user.s3,
 								studgovt: user.studgovt,
 								s12rollno: user.s12rollno,
+								img: user.img,
 							},
 							status: true,
 						});
